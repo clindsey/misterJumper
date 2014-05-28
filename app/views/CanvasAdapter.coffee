@@ -7,7 +7,13 @@ moduleLibrary.define 'CanvasAdapter.View', gamecore.Pooled.extend 'CanvasAdapter
       canvasAdapterView.canvasEl = document.createElement 'canvas'
       canvasAdapterView.canvasEl.width = options.width
       canvasAdapterView.canvasEl.height = options.height
-      document.body.appendChild canvasAdapterView.canvasEl
+      containerEl = document.body
+      if options.canvasContainerId
+        containerEl = document.getElementById(options.canvasContainerId)
+
+      containerEl.appendChild canvasAdapterView.canvasEl
+
+      canvasAdapterView.containerEl = containerEl
 
       canvasAdapterView
 

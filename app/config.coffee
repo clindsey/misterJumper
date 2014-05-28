@@ -9,5 +9,6 @@ config =
 config.canvasAdapterOptions =
   width: 640
   height: 480
+  canvasContainerId: 'game-container'
 
 moduleLibrary.define 'config', config

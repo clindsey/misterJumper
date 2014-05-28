@@ -61,7 +61,7 @@ moduleLibrary.define 'Hero.View', gamecore.Pooled.extend 'HeroView',
 
     startJump: ->
       unless @jumping
-        @verticalVelocity -= 5.5
+        @verticalVelocity -= 6.5
       @jumping = true
       @needsPlatformCollision = true
 
