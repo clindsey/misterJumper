@@ -7,6 +7,7 @@ moduleLibrary.define 'Platform.View', gamecore.Pooled.extend 'PlatformView',
       platformView = @_super()
 
       platformView.model = platformModel
+      platformView.lastPlatform = undefined
 
       platformView.spriteSheet = new createjs.SpriteSheet @spriteSheetOptions
 
@@ -48,6 +49,8 @@ moduleLibrary.define 'Platform.View', gamecore.Pooled.extend 'PlatformView',
       platformView.lastPlatform = lastPlatform
   ,
     onTick: ->
+      return if createjs.Ticker.getPaused()
+
       tileCount = @el.children.length
 
       for platformTile in @el.children
@@ -62,10 +65,19 @@ moduleLibrary.define 'Platform.View', gamecore.Pooled.extend 'PlatformView',
           @lastPlatform = platformTile
 
     placePlatform: (lastPlatform) ->
-      x = (lastPlatform.x + 576) + (utils.sessionRandom() * 200 - 100) + 120
-      y = 380 + (utils.sessionRandom() * 100 - 50)
+      x = (lastPlatform.x + 576) + (utils.sessionRandom() * 40 - 20) + 140
+      y = 380 + (utils.sessionRandom() * 60 - 30)
 
       {x, y}
 
     dispose: ->
+      @el.getStage().removeChild @el
+
+      delete this['model']
+      delete this['lastPlatform']
+      delete this['spriteSheet']
+      delete this['el']
+
+      createjs.Ticker.removeEventListener 'tick', @onTick
+
       @release()

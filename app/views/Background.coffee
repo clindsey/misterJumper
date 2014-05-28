@@ -35,6 +35,8 @@ moduleLibrary.define 'Background.View', gamecore.Pooled.extend 'BackgroundView',
         backgroundView.el.addChild backgroundTile
   ,
     onTick: ->
+      return if createjs.Ticker.getPaused()
+
       tileCount = @el.children.length
 
       for backgroundTile in @el.children
@@ -44,4 +46,12 @@ moduleLibrary.define 'Background.View', gamecore.Pooled.extend 'BackgroundView',
           backgroundTile.x += tileCount * 640
 
     dispose: ->
+      @el.getStage().removeChild @el
+
+      delete this['model']
+      delete this['spriteSheet']
+      delete this['el']
+
+      createjs.Ticker.removeEventListener 'tick', @onTick
+
       @release()
