@@ -11,7 +11,8 @@
     onLoad: ->
       utils.loadImages config.spriteSheetSource, app.onImagesLoad
 
-      window.addEventListener 'resize', app.resizeCanvas, false
+      if config.canvasAdapterOptions.canvasContainerId
+        window.addEventListener 'resize', app.resizeCanvas, false
 
     resizeCanvas: ->
       canvas = app.canvasAdapterView.canvasEl
@@ -35,7 +36,8 @@
 
       app.stageView = (moduleLibrary.get 'Stage.View').create app.canvasAdapterView.canvasEl, 'scenes/MainPlay', 'MainPlay.Scene'
 
-      app.resizeCanvas()
+      if config.canvasAdapterOptions.canvasContainerId
+        app.resizeCanvas()
 
       document.onkeydown = app.onKeyDown
       document.onkeyup = app.onKeyUp
